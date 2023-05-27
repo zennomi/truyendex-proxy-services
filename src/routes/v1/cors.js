@@ -14,14 +14,8 @@ const {
 async function routes(fastify, options) {
   fastify.register(require("fastify-cors"), {
     origin: [
-      /cubari\.moe/,
-      /proxy\.cubari\.moe/,
-      /jest\.testing\.local/,
       /localhost/,
-      /hoppscotch\.io/,
-      /staging\.guya\.moe/,
-      /manga\.guya\.moe/,
-      /guya\.moe/,
+      /truyendex\.vercel\.app/,
     ],
   });
 
