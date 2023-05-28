@@ -1,10 +1,20 @@
-const { proxy } = require("fast-proxy")({
-  cacheURLs: 0,
-  requests: {
-    http: require("follow-redirects/http"),
-    https: require("follow-redirects/https"),
-  },
-});
+const fastProxy = require("fast-proxy")
+
+const proxies = ['http://209.141.52.140:5656', 'http://209.141.55.71:6565', 'http://209.141.41.128:7878', 'http://205.185.117.227:8787']
+
+const proxy = (originReq, originRes, url, options) => {
+  const randomProxy = proxies[getRandomInt(0, proxies.length)]
+  console.log(randomProxy)
+  fastProxy({
+    base: randomProxy,
+    cacheURLs: 0,
+    requests: {
+      http: require("follow-redirects/http"),
+      https: require("follow-redirects/https"),
+    },
+  }).proxy(originReq, originRes, url, options)
+    ;
+}
 
 const INJECTED_STATUS_HEADER = "x-content-retrieved";
 
@@ -56,3 +66,9 @@ module.exports = {
   rewriteHeadersHandler,
   onResponseHandler,
 };
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
