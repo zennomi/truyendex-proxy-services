@@ -1,23 +1,11 @@
-(require("dotenv")).config()
 
-const fastProxy = require("fast-proxy")
-
-const proxies = process.env.PROXY_POOL ? process.env.PROXY_POOL.split(",") : []
-console.log(proxies)
-
-const proxy = (originReq, originRes, url, options) => {
-  const randomProxy = proxies[getRandomInt(0, proxies.length)]
-  console.log(randomProxy)
-  fastProxy({
-    base: randomProxy,
-    cacheURLs: 0,
-    requests: {
-      http: require("follow-redirects/http"),
-      https: require("follow-redirects/https"),
-    },
-  }).proxy(originReq, originRes, url, options)
-    ;
-}
+const { proxy } = require("fast-proxy")({
+  cacheURLs: 0,
+  requests: {
+    http: require("follow-redirects/http"),
+    https: require("follow-redirects/https"),
+  },
+});
 
 const INJECTED_STATUS_HEADER = "x-content-retrieved";
 
@@ -69,9 +57,3 @@ module.exports = {
   rewriteHeadersHandler,
   onResponseHandler,
 };
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
