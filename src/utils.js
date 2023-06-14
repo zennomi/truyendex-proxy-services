@@ -74,7 +74,7 @@ const getRandomInt = (min, max) => {
 }
 
 const proxyUrl = (url) => {
-  const REGEX_PROXY_URLS = [/https:\/\/api\.mangadex\.org\/manga\?*/]
+  const REGEX_PROXY_URLS = [/https:\/\/api\.mangadex\.org\/manga\?*/, /https:\/\/api\.mangadex\.org\/chapter\?*/]
   for (const regex of REGEX_PROXY_URLS) {
     if (regex.test(url)) return true
   }
