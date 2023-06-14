@@ -73,6 +73,15 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const proxyUrl = (url) => {
+  const REGEX_PROXY_URLS = [/https:\/\/api\.mangadex\.org\/manga\?*/]
+  for (const regex of REGEX_PROXY_URLS) {
+    if (regex.test(url)) return true
+  }
+
+  return false
+}
+
 module.exports = {
   normalizeUrl,
   extractEncodedUrl,
@@ -83,4 +92,5 @@ module.exports = {
   ping,
   sleep,
   getRandomInt,
+  proxyUrl,
 };

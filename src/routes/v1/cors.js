@@ -21,6 +21,7 @@ const {
   base64UrlDecode,
   normalizeUrl,
   getCacheHeaders,
+  proxyUrl,
 } = require("../../utils");
 const {
   proxy,
@@ -54,7 +55,7 @@ async function routes(fastify, options) {
         .send(new Error("Missing origin or x-requested-with header."));
     }
 
-    if (request.method === "GET") {
+    if (request.method === "GET" && proxyUrl(decodedUrl)) {
       const randomProxy = proxies[getRandomInt(0, proxies.length - 1)]
       const agent = new HttpsProxyAgent(randomProxy);
       const { redis } = fastify
