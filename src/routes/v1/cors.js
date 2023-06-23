@@ -36,6 +36,7 @@ async function routes(fastify, options) {
     origin: [
       /localhost/,
       /truyendex\.vercel\.app/,
+      /nettrom\.com/,
     ],
   })
     .register(require('@fastify/redis'), { client: redis })
