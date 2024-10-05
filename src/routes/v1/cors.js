@@ -14,7 +14,6 @@ const abcache = require('abstract-cache')({
 const { getRandomInt } = require("../../utils")
 
 const proxies = process.env.PROXY_POOL ? process.env.PROXY_POOL.split(",") : []
-console.log(proxies)
 
 const {
   getRefererHeader,
@@ -37,6 +36,7 @@ async function routes(fastify, options) {
       /localhost/,
       /truyendex\.vercel\.app/,
       /nettrom\.com/,
+      /truyendex\.com/,
     ],
   })
     .register(require('@fastify/redis'), { client: redis })
@@ -70,7 +70,7 @@ async function routes(fastify, options) {
         }).then((res) => {
           reply.header("cache-control", getCacheHeaders("public", 30, 30))
           if (res.status === 200) {
-            redis.set(encodedUrl, JSON.stringify(res.data), 'ex', 30, (err) => {
+            redis.set(encodedUrl, JSON.stringify(res.data), 'ex', 5 * 60, (err) => {
               reply.code(res.status).send(res.data)
             })
             return
