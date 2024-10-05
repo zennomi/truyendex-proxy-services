@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  redisdb:
+    container_name: redisdb
+    image: redis:latest
+    env_file:
+      - .env
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - "./data/redis:/data"
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "redis-server --appendonly yes --requirepass $${REDIS_PASSWORD}",
+      ]
+    ports:
+      - "6380:6379"
+    restart: always

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Cubari proxy services.",
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest"
   },
