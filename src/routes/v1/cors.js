@@ -2,7 +2,7 @@
 
 const { HttpsProxyAgent } = require("https-proxy-agent")
 const IORedis = require('ioredis')
-const redis = new IORedis({ password: process.env.REDIS_PASSWORD })
+const redis = new IORedis({ port: process.env.REDIS_PORT, password: process.env.REDIS_PASSWORD })
 const abcache = require('abstract-cache')({
   useAwait: false,
   driver: {

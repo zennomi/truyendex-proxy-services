@@ -17,5 +17,5 @@ services:
         "redis-server --appendonly yes --requirepass $${REDIS_PASSWORD}",
       ]
     ports:
-      - "6380:6379"
+      - "${REDIS_PORT}:6379"
     restart: always
